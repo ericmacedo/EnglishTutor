@@ -1,0 +1,19 @@
+<resources>
+    <string name="app_name">English Tutor</string>
+
+    <string-array name="dependencias">
+        <item>SpeechRecognition</item>
+        <item>Internet</item>
+    </string-array>
+
+    <string-array name="frases">
+        <item>Hi how are you</item>
+        <item>Where are you from</item>
+        <item>This is my house</item>
+        <item>I wasn\'t expecting that</item>
+        <item>This is a dog</item>
+        <item>That\'s a cat</item>
+        <item>There are birds</item>
+    </string-array>
+    <string name="title_activity_dependencies">Dependencies</string>
+</resources>
