@@ -31,7 +31,7 @@
         android:layout_below="@id/progressBar"
         android:gravity="center"
         android:fontFamily="sans-serif-light"
-        android:hint="Pressione o botão e fale após o \'bip\'! "
+        android:hint="@string/press_button"
         android:paddingTop="8dp"
         android:paddingBottom="16dp"
         android:textSize="16dp" />

@@ -1,7 +1,6 @@
 package com.macedo.eric.englishtutor;
 
 import android.app.Activity;
-import android.app.LauncherActivity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -11,7 +10,6 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 public class Activities extends AppCompatActivity {
 
@@ -19,12 +17,12 @@ public class Activities extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_activities);
-        setTitle("Speech Lessons");
+        setTitle(R.string.speech_lessons);
 
         String[] activities = getResources().getStringArray(R.array.frases);
 
         ArrayAdapter<String> mActivities =
-                new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, activities);
+                new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, activities);
 
         ListView listView = (ListView) findViewById(R.id.activities_list);
         listView.setAdapter(mActivities);

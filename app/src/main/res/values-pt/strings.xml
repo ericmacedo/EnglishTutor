@@ -1,0 +1,10 @@
+<resources>
+    <string name="start">COMEÇAR</string>
+    <string name="quit">SAIR</string>
+    <string name="speech_recognition">Reconhecimento de Voz</string>
+    <string name="available">Disponivel</string>
+    <string name="unavailable">Indisponivel</string>
+    <string name="speech_lessons">Exercícios de Pronuncia</string>
+    <string name="congratulations">Parabens!</string>
+    <string name="press_button">Pressione o botão e fale após o \'bip\'</string>
+</resources>

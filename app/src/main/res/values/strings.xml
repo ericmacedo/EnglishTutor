@@ -1,8 +1,16 @@
 <resources>
     <string name="app_name">English Tutor</string>
+    <string name="start">START</string>
+    <string name="quit">QUIT</string>
+    <string name="speech_recognition">Speech Recognition</string>
+    <string name="available">Available</string>
+    <string name="unavailable">Unavailable</string>
+    <string name="speech_lessons">Speech Lessons</string>
+    <string name="congratulations">Congratulations!</string>
+    <string name="press_button">Press the button and start speaking after the \'bip\'</string>
 
     <string-array name="dependencias">
-        <item>SpeechRecognition</item>
+        <item>@string/speech_recognition</item>
         <item>Internet</item>
     </string-array>
 

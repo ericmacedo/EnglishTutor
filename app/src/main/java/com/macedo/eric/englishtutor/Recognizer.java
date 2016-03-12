@@ -158,7 +158,7 @@ public class Recognizer
             returnIntent.putExtra("equals", true);
 
             setResult(Activity.RESULT_OK, returnIntent);
-            Toast.makeText(Recognizer.this, "Congratulations", Toast.LENGTH_LONG).show();
+            Toast.makeText(Recognizer.this, R.string.congratulations, Toast.LENGTH_SHORT).show();
 
             new Handler().postDelayed(new Runnable() {
                 @Override

@@ -1,14 +1,11 @@
 package com.macedo.eric.englishtutor;
 
-import android.app.Activity;
 import android.app.ListActivity;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.net.Uri;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.speech.SpeechRecognizer;
@@ -16,14 +13,13 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Adapter;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
+
+import static com.macedo.eric.englishtutor.R.string.available;
 
 public class Dependencies extends ListActivity {
 
@@ -82,19 +78,19 @@ public class Dependencies extends ListActivity {
     }
 
     public void displayListView(){
-        ArrayList<Component> mComponents = new ArrayList<Component>();
+        ArrayList<Component> mComponents = new ArrayList<>();
 
-        String recognitiontxt = null;
+        String recognitiontxt;
         if(recognition)
-            recognitiontxt = "Available";
+             recognitiontxt = getResources().getString(R.string.available);
         else
-            recognitiontxt = "Not Available";
+            recognitiontxt = getResources().getString(R.string.unavailable);
 
-        String internettxt = null;
+        String internettxt;
         if(connectivity)
-            internettxt = "Available";
+            internettxt = getResources().getString(R.string.available);
         else
-            internettxt = "Not Available";
+            internettxt = getResources().getString(R.string.unavailable);
 
         String[] componentsList = getResources().getStringArray(R.array.dependencias);
 
@@ -104,7 +100,6 @@ public class Dependencies extends ListActivity {
 
         adaptador = new CustomAdapter(Dependencies.this, R.layout.custom_view, mComponents);
 
-        //ListView lv = (ListView) findViewById(R.id.dependencies_list);
         this.setListAdapter(adaptador);
     }
 
@@ -135,7 +130,7 @@ public class Dependencies extends ListActivity {
                              ArrayList<Component> componentList) {
 
             super(context, textViewResourceId, componentList);
-            this.componentList = new ArrayList<Component>();
+            this.componentList = new ArrayList<>();
             this.componentList.addAll(componentList);
         }
 
@@ -170,9 +165,9 @@ public class Dependencies extends ListActivity {
             holder.name.setText(component.getName());
             holder.state.setText(component.getState());
 
-            if( component.getState().equals("Available") )
+            if( component.getState().equals(getResources().getString(R.string.available)) )
                 holder.state.setTextColor(Color.GREEN);
-            else if ( component.getState().equals("Not Available") )
+            else if ( component.getState().equals(getResources().getString(R.string.unavailable)) )
                 holder.state.setTextColor(Color.RED);
 
             return convertView;
