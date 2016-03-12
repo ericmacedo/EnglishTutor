@@ -19,8 +19,6 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
-import static com.macedo.eric.englishtutor.R.string.available;
-
 public class Dependencies extends ListActivity {
 
     public static boolean recognition;
@@ -29,7 +27,6 @@ public class Dependencies extends ListActivity {
 
     private CustomAdapter adaptador = null;
 
-    //private final String MARKET_SPEECH_ID = "com.google.android.tts";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,12 +34,13 @@ public class Dependencies extends ListActivity {
         connectivity = hasInternetConnection();
 
         super.onCreate(savedInstanceState);
-        //setContentView(R.layout.activity_dependencies);
+        //setContentView(R.layout.activity_dependencies); desnecessário dado que o setAdapter já instancia uma view
 
         displayListView();
 
     }
 
+    //Listener do valores da ListView
     @Override
     public void onListItemClick(ListView list, View view, int position, long id) {
         super.onListItemClick(list, view, position, id);
@@ -51,12 +49,11 @@ public class Dependencies extends ListActivity {
 
         switch (position){
             case 0: // Se escolher "Reconhecedor de Voz"
-                //intent = new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + this.MARKET_SPEECH_ID));
-                intent = new Intent(Settings.ACTION_VOICE_INPUT_SETTINGS);
+                intent = new Intent(Settings.ACTION_VOICE_INPUT_SETTINGS); //Lança uma chamada para a uma action de input settings
                 startActivity(intent);
                 break;
             case 1: // Se escolher "Checagem de componentes"
-                intent = new Intent(Settings.ACTION_WIFI_SETTINGS);
+                intent = new Intent(Settings.ACTION_WIFI_SETTINGS); //lança uma chamada para uma action de wifi settings
                 if (intent.resolveActivity(getPackageManager()) != null) {
                     startActivity(intent);
                 }
@@ -67,6 +64,7 @@ public class Dependencies extends ListActivity {
     }
 
 
+    //Checa se há conexão com a internet
     public boolean hasInternetConnection() {
 
         ConnectivityManager cm =
@@ -77,7 +75,9 @@ public class Dependencies extends ListActivity {
                 activeNetwork.isConnectedOrConnecting();
     }
 
+
     public void displayListView(){
+        //Cria um array list para passar os parametros para o adapter da list view
         ArrayList<Component> mComponents = new ArrayList<>();
 
         String recognitiontxt;
@@ -100,9 +100,11 @@ public class Dependencies extends ListActivity {
 
         adaptador = new CustomAdapter(Dependencies.this, R.layout.custom_view, mComponents);
 
+        //passa os valores do array list para o adapter para este instanciar os layouts populados com os valores
         this.setListAdapter(adaptador);
     }
 
+    //Classe auxiliar do CustomAdapter
     public class Component{
 
         private String name;
@@ -122,6 +124,7 @@ public class Dependencies extends ListActivity {
         }
     }
 
+    //Modificação do ArrayAdapter para receber customViews
     private class CustomAdapter extends ArrayAdapter<Component> {
 
         public ArrayList<Component> componentList;

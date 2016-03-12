@@ -52,16 +52,18 @@ public class Recognizer
         this.progressBar.setVisibility(View.INVISIBLE);
         speech = SpeechRecognizer.createSpeechRecognizer(this);
 
+        //Configuração do helper de reconhecimento de voz
         speech.setRecognitionListener(this);
         recognizerIntent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
         recognizerIntent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_PREFERENCE,
-                this.LANG);
+                this.LANG); //Seta a linguagem
         recognizerIntent.putExtra(RecognizerIntent.EXTRA_CALLING_PACKAGE,
                 this.getPackageName());
         recognizerIntent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL,
-                RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
+                RecognizerIntent.LANGUAGE_MODEL_FREE_FORM); //Modo de input do metodo de entrada
         recognizerIntent.putExtra(RecognizerIntent.EXTRA_MAX_RESULTS, 1);
 
+        //Listener do toggleButton de reconhecimento de voz
         toggleButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
 
             @Override
@@ -81,6 +83,9 @@ public class Recognizer
 
     }
 
+    /*
+    Interfaces do Recognition Listener
+     */
     @Override
     public void onResume() {
         super.onResume();
@@ -140,15 +145,19 @@ public class Recognizer
 
     @Override
     public void onResults(Bundle results) {
+        //Metodo que é chamado quando o reconhecimento é terminado
         Log.i(LOG_TAG, "onResults");
         ArrayList<String> matches = results
-                .getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION);
-        String text = matches.get(0);
-        text = text.substring(0, 1).toUpperCase() + text.substring(1).toLowerCase();
+                .getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION); //passa os valores retornados pelo bundle para um ArrayList
+        String text = matches.get(0); //Pega apenas o primeiro valor(de maior relevancia)
+        text = text.substring(0, 1).toUpperCase() + text.substring(1).toLowerCase();//primeira letra maiuscula(O reconhecedor costuma modificar os cases)
 
-        returnedText.setText(text);
+        returnedText.setText(text); //apresenta o valor retornado na view
 
         if(text.equals(this.word)) {
+            /*
+            Caso o usuário tenha acertado
+             */
             Intent returnIntent = new Intent();
             returnIntent.putExtra("parentView_id", Recognizer.this.getIntent().getExtras().getInt("parentView_id"));
             returnIntent.putExtra("parentView_pos", Recognizer.this.getIntent().getExtras().getInt("parentView_pos"));
@@ -160,6 +169,7 @@ public class Recognizer
             setResult(Activity.RESULT_OK, returnIntent);
             Toast.makeText(Recognizer.this, R.string.congratulations, Toast.LENGTH_SHORT).show();
 
+            //Timer
             new Handler().postDelayed(new Runnable() {
                 @Override
                 public void run() {
@@ -167,6 +177,9 @@ public class Recognizer
                 }
             }, 2000);
         } else {
+            /*
+            Caso o usuário erre
+             */
             this.returnedText.setTextColor(Color.RED);
         }
 
@@ -179,6 +192,9 @@ public class Recognizer
     }
 
     public static String getErrorText(int errorCode) {
+        /*
+        metodo para fins de logs
+         */
         String message;
         switch (errorCode) {
             case SpeechRecognizer.ERROR_AUDIO:

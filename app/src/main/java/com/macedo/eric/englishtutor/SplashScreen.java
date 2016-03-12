@@ -16,6 +16,7 @@ public class SplashScreen extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash_screen);
 
+        //Timer da splash screen
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
