@@ -7,6 +7,10 @@ import android.os.Handler;
 import android.view.Menu;
 import android.view.View;
 
+/**
+ * Classe que extends Actitivy, usada como uma Splash Screen de 5 segundos.
+ * A splash screen é visivel assim que a aplicação é lançada.
+ */
 public class SplashScreen extends Activity {
 
     private final int SPLASH_DISPLAY_LENGTH = 5000;

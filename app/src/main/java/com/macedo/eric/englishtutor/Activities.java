@@ -11,8 +11,17 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
+/**
+ * Classe que extends AppCompatActivity.
+ * Lista uma série de frases definidas nos recursos da aplicação.
+ * {@link com.macedo.eric.englishtutor.R.string}
+ */
 public class Activities extends AppCompatActivity {
 
+    /**
+     * Seta o Layout com uma ListView populada com valores definidos nos recursos da aplicação
+     * @param savedInstanceState Bundle - Referencia à atividade atual
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,17 +38,15 @@ public class Activities extends AppCompatActivity {
         ListView listView = (ListView) findViewById(R.id.activities_list);
         listView.setAdapter(mActivities);
 
-        //listener do list view
+        /**
+         Listener do list view. Cria um intent que vai chamar uma atividade e esperar por um intent
+         que será retornado e pode ser acessado pelo metodo onActivityResult
+
+         O metodo putExtra insere dados no intent
+         */
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-
-                /*
-                cria um intent que vai chamar uma atividade e esperar por um intent
-                que será retornado e pode ser acessado pelo metodo onActivityResult
-
-                O metodo putExtra insere dados no intent
-                 */
                 Intent intent = new Intent(Activities.this, Recognizer.class);
                 intent.putExtra("sentence", adapterView.getAdapter().getItem(i).toString());
                 intent.putExtra("parentView_id", i);
@@ -48,12 +55,15 @@ public class Activities extends AppCompatActivity {
         });
     }
 
+    /**
+     * Metodo que recebe o intent resultante do startActivityForResult.
+     * @param requestCode int - Request code usado como indice de todas as atividades que implementam startActivityForResult
+     * @param resultCode int - codigo de resultado do startActivityForResult
+     * @param data Intent - Referencia do estado da atividade 'filha' da atividade que a instanciou
+     */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
-        /*
-        Metodo que recebe o intent resultante do startActivityForResult
-         */
         if (requestCode == 1) {
             if(resultCode == Activity.RESULT_OK){
                 ListView listView = (ListView) findViewById(R.id.activities_list);

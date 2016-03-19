@@ -19,6 +19,10 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
+/** Classe que extends ListActivity, que tem a finalidade de listar o estado das dependencias
+ * fundamentais para o funcionamento da aplicação
+ *
+ */
 public class Dependencies extends ListActivity {
 
     public static boolean recognition;
@@ -40,7 +44,7 @@ public class Dependencies extends ListActivity {
 
     }
 
-    //Listener do valores da ListView
+    //Listener do valores da ListView, implementação da ListActivity
     @Override
     public void onListItemClick(ListView list, View view, int position, long id) {
         super.onListItemClick(list, view, position, id);
@@ -64,7 +68,10 @@ public class Dependencies extends ListActivity {
     }
 
 
-    //Checa se há conexão com a internet
+    /**
+     *
+     * @return true caso haja conexão com a internet, false caso contrário
+     */
     public boolean hasInternetConnection() {
 
         ConnectivityManager cm =
@@ -76,6 +83,9 @@ public class Dependencies extends ListActivity {
     }
 
 
+    /** Metodo que popula as view da ListView
+     *
+     */
     public void displayListView(){
         //Cria um array list para passar os parametros para o adapter da list view
         ArrayList<Component> mComponents = new ArrayList<>();
@@ -104,31 +114,57 @@ public class Dependencies extends ListActivity {
         this.setListAdapter(adaptador);
     }
 
-    //Classe auxiliar do CustomAdapter
+    /**Classe auxiliar usada para instanciar um CustomAdapter corretamente
+     * Ver também {@link com.macedo.eric.englishtutor.Dependencies.CustomAdapter}
+     *
+     */
     public class Component{
 
         private String name;
         private String state;
 
+        /**
+         * Construtor da classe
+         * @param name String - Define o nome do componente
+         * @param state String - Define estado do componente
+         */
         public Component(String name, String state){
             this.name = name;
             this.state = state;
         }
 
+        /**
+         * Metodo get para o parametro 'name'
+         * @return name String
+         */
         public String getName(){
             return this.name;
         }
 
+        /**
+         * Metodo get para o parametro 'state'
+         * @return name String
+         */
         public String getState(){
             return this.state;
         }
     }
 
-    //Modificação do ArrayAdapter para receber customViews
+    /** Classe usada para popular uma ListView de forma customizada, extends a classe ArrayAdapter
+     *
+     *Ver também
+     * {@see <a href="http://developer.android.com/intl/pt-br/reference/android/widget/ArrayAdapter.html">ArrayAdapter</a>}
+     */
     private class CustomAdapter extends ArrayAdapter<Component> {
 
         public ArrayList<Component> componentList;
 
+        /**
+         *
+         * @param context Context - Contexto da aplicação
+         * @param textViewResourceId int - id do recurso usado como view
+         * @param componentList ArrayList - Lista de componentes a ser listado
+         */
         public CustomAdapter(Context context, int textViewResourceId,
                              ArrayList<Component> componentList) {
 
@@ -137,6 +173,9 @@ public class Dependencies extends ListActivity {
             this.componentList.addAll(componentList);
         }
 
+        /**
+         * Classe auxiliar para popular um ListView
+         */
         public class ViewHolder {
 
             public TextView name;
@@ -144,6 +183,13 @@ public class Dependencies extends ListActivity {
 
         }
 
+        /**
+         *
+         * @param position int - posição da ListView a ser acessada
+         * @param convertView View - parametro usado para manipular e customizar a CustomView
+         * @param parent ViewGroup - View um nivel hierarquico da view a ser customizada
+         * @return retorna a view customizada, dadas as customizações feitas no corpo do metodo
+         */
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
 

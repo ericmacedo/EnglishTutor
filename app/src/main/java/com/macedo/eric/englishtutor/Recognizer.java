@@ -19,7 +19,13 @@ import android.widget.ToggleButton;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-
+/**
+ * Classe que faz reconhencimento de voz totalmente funcional. Depende de conexão com a internet e
+ * faz uso da API SpeechRecognizer do Google. A interface RecognitionListener é usada como intermediador
+ * da comunicação com a API.
+ * @see {<a href=http://developer.android.com/intl/pt-br/reference/android/speech/SpeechRecognizer.html>SpeechRecognizer</a> }
+ *
+ */
 public class Recognizer
         extends Activity
         implements RecognitionListener {
@@ -35,6 +41,10 @@ public class Recognizer
     private final String LANG = "en";
     private String word;
 
+    /**
+     * No metodo OnCreate - metodo herdado de Actitivity - todos os componentes da API são setados.
+     * @param savedInstanceState Bundle - Referencia para os estados atual da aplicação
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -83,14 +93,17 @@ public class Recognizer
 
     }
 
-    /*
-    Interfaces do Recognition Listener
+    /**
+     * Metodo que é chamado quando o ButtonListener capta um evento quando a interface está no estado 'parado'
      */
     @Override
     public void onResume() {
         super.onResume();
     }
 
+    /**
+     * Metodo que é chamado quando o ButtonListener capta um evento quando a interface está no estado 'reconhecendo'
+     */
     @Override
     protected void onPause() {
         super.onPause();
@@ -101,6 +114,9 @@ public class Recognizer
 
     }
 
+    /**
+     * Metodo que é chamado quando a interface começa a reconhecer input sonoro
+     */
     @Override
     public void onBeginningOfSpeech() {
         Log.i(LOG_TAG, "onBeginningOfSpeech");
@@ -108,11 +124,17 @@ public class Recognizer
         progressBar.setMax(10);
     }
 
+    /**
+     * Metodo que é chamado quando a interface recebe input sonoro e seu tradutor já conseguiu traduzir algo parcial
+     */
     @Override
     public void onBufferReceived(byte[] buffer) {
         Log.i(LOG_TAG, "onBufferReceived: " + Arrays.toString(buffer));
     }
 
+    /**
+     * Metodo chamado quando a interface passa do estado 'reconhecendo' para o estado 'parado', ou seja, terminou o reconhecimento
+     */
     @Override
     public void onEndOfSpeech() {
         Log.i(LOG_TAG, "onEndOfSpeech");
@@ -120,6 +142,10 @@ public class Recognizer
         toggleButton.setChecked(false);
     }
 
+    /**
+     * Metodo chamado quando a interface encontra um erro no reconhecimento
+     * @param errorCode int - Codigo interno de erro
+     */
     @Override
     public void onError(int errorCode) {
         String errorMessage = getErrorText(errorCode);
@@ -128,21 +154,39 @@ public class Recognizer
         toggleButton.setChecked(false);
     }
 
+    /**
+     * Metodo da interface
+     * @param arg0
+     * @param arg1
+     */
     @Override
     public void onEvent(int arg0, Bundle arg1) {
         Log.i(LOG_TAG, "onEvent");
     }
 
+    /**
+     *
+     * @param arg0 Bundle - Bundle com resultados parciais do reconhecimento de voz
+     */
     @Override
     public void onPartialResults(Bundle arg0) {
         Log.i(LOG_TAG, "onPartialResults");
     }
 
+    /**
+     * Metodo da interface usado quando se deseja fazer algo antes de começar a reconhecer voz
+     * @param arg0 Bundle
+     */
     @Override
     public void onReadyForSpeech(Bundle arg0) {
         Log.i(LOG_TAG, "onReadyForSpeech");
     }
 
+    /**
+     * Recebe um bundle com os resultados do reconhecimento de voz e passa esses valores para a view
+     * correta.
+     * @param results Bundle - Bundle com os resultados obtidos pelo reconhecimento de voz
+     */
     @Override
     public void onResults(Bundle results) {
         //Metodo que é chamado quando o reconhecimento é terminado
@@ -185,12 +229,22 @@ public class Recognizer
 
     }
 
+    /**
+     * Recebe como parametro um valor referente à frequencia sonora sendo recebida pela interface e
+     * passa esse parametro para o log da aplicação e para o progressbar.
+     * @param rmsdB float - valor em ponto flutuante referente à frequencia sonora sendo recebida pela interface
+     */
     @Override
     public void onRmsChanged(float rmsdB) {
         Log.i(LOG_TAG, "onRmsChanged: " + rmsdB);
         progressBar.setProgress((int) rmsdB);
     }
 
+    /**
+     * Traduz um codigo de erro para um output verbal
+     * @param errorCode int - Codigo interno de erro
+     * @return String - Retorna um correspondente verbal ao codigo de erro interno
+     */
     public static String getErrorText(int errorCode) {
         /*
         metodo para fins de logs
